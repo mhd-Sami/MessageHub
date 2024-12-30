@@ -23,7 +23,10 @@ pipeline {
             steps {
                 // Ensure the backend server can be built without errors
                 echo 'Building the backend...'
-                sh 'npm run build --prefix backend'
+                withCredentials([file(credentialsId: 'ENV-Secrets', variable: 'ENV_FILE')]) {
+                    sh 'cp $ENV_FILE .env'
+                    sh 'npm run build --prefix backend'
+                }
             }
         }
     }
@@ -33,10 +36,10 @@ pipeline {
             cleanWs()
         }
         success {
-            echo 'Build and Tests Completed Successfully!'
+            echo 'Build Completed Successfully!'
         }
         failure {
-            echo 'Build or Tests Failed. Check logs for details.'
+            echo 'Build Failed. Check logs for details.'
         }
     }
 }
