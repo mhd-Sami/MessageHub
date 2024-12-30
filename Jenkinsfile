@@ -24,7 +24,7 @@ pipeline {
                 // Ensure the backend server can be built without errors
                 echo 'Building the backend...'
                 withCredentials([file(credentialsId: 'ENV-Secrets', variable: 'ENV_FILE')]) {
-                    bat 'copy $ENV_FILE .env'
+                    bat 'copy "%ENV_FILE%" .env'
                     bat 'npm run build --prefix backend'
                 }
             }
