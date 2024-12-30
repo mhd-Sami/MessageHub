@@ -25,7 +25,8 @@ pipeline {
                 echo 'Building the backend...'
                 withCredentials([file(credentialsId: 'ENV-Secrets', variable: 'ENV_FILE')]) {
                     bat 'copy "%ENV_FILE%" .env'
-                    bat 'npm run build --prefix backend'
+                    bat 'npm run build-backend'
+
                 }
             }
         }

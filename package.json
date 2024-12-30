@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon backend/server.js",
     "both": "concurrently \"cd frontend && npm run start\" \"cd backend && nodemon server.js\"",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "build-backend": "cd backend && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
