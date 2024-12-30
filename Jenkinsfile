@@ -4,7 +4,7 @@ pipeline {
         nodejs 'NodeJS' // Ensure this matches the name configured in Global Tool Configuration
     }
     environment {
-        NODE_ENV = 'test' 
+        NODE_ENV = 'production' 
     }
     stages {
         stage('Checkout') {
