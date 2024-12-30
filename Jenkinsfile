@@ -16,7 +16,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install dependencies from the root directory
-                sh 'npm install'
+                bat 'npm install'
             }
         }
         stage('Build Backend') {
@@ -24,8 +24,8 @@ pipeline {
                 // Ensure the backend server can be built without errors
                 echo 'Building the backend...'
                 withCredentials([file(credentialsId: 'ENV-Secrets', variable: 'ENV_FILE')]) {
-                    sh 'cp $ENV_FILE .env'
-                    sh 'npm run build --prefix backend'
+                    bat 'cp $ENV_FILE .env'
+                    bat 'npm run build --prefix backend'
                 }
             }
         }
