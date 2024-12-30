@@ -4,7 +4,7 @@ pipeline {
         nodejs 'NodeJS' // Ensure this matches the name configured in Global Tool Configuration
     }
     environment {
-        NODE_ENV = 'produciton' 
+        NODE_ENV = 'production' 
         PORT = credentials('PORT')
         MONGO_URI = credentials('MONGO_URI')
         JWT_SECRET = credentials('JWT_SECRET')
