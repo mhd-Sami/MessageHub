@@ -5,6 +5,12 @@ pipeline {
     }
     environment {
         NODE_ENV = 'test' // Set environment to 'test' for running tests
+        PORT = credentials('PORT')
+        MONGO_URI = credentials('MONGO_URI')
+        JWT_SECRET = credentials('JWT_SECRET')
+        LOCALHOST = credentials('LOCALHOST')
+        EMAIL = credentials('EMAIL')
+        PASSWORD = credentials('PASSWORD')
     }
     stages {
         stage('Checkout') {
