@@ -4,13 +4,7 @@ pipeline {
         nodejs 'NodeJS' // Ensure this matches the name configured in Global Tool Configuration
     }
     environment {
-        NODE_ENV = 'test' // Set environment to 'test' for running tests
-        PORT = credentials('PORT')
-        MONGO_URI = credentials('MONGO_URI')
-        JWT_SECRET = credentials('JWT_SECRET')
-        LOCALHOST = credentials('LOCALHOST')
-        EMAIL = credentials('EMAIL')
-        PASSWORD = credentials('PASSWORD')
+        NODE_ENV = 'test' 
     }
     stages {
         stage('Checkout') {
@@ -32,13 +26,6 @@ pipeline {
                 sh 'npm run build --prefix backend'
             }
         }
-        // stage('Run Tests') {
-        //     steps {
-        //         // Run tests using npm test
-        //         echo 'Running tests...'
-        //         sh 'npm test --prefix backend'
-        //     }
-        // }
     }
     post {
         always {
