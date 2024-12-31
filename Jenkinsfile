@@ -38,11 +38,6 @@ pipeline {
                 }
             }
         }
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: 'build/**', onlyIfSuccessful: true
-            }
-        }
     }
     post {
         always {
