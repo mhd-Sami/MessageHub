@@ -27,8 +27,7 @@ pipeline {
         stage('Start Backend') {
             steps {
                 echo 'Starting the backend...'
-                bat 'start /B npm start'
-                bat 'timeout /T 20' // Wait for 10 seconds (adjust as needed)
+                bat 'npm start'
             }
         }
         stage('Archive Artifacts') {
