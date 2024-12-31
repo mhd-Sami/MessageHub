@@ -24,10 +24,18 @@ pipeline {
                 }
             }
         }
-        stage('Start Backend') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Starting the backend...'
-                bat 'npm start'
+                script {
+                    dockerImage = docker.build("messagehub-backend:${env.BUILD_ID}")
+                }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    dockerImage.run('-d -p 5000:5000 --env-file .env')
+                }
             }
         }
         stage('Archive Artifacts') {
