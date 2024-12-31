@@ -30,6 +30,11 @@ pipeline {
                 bat 'npm start'
             }
         }
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'build/**', onlyIfSuccessful: true
+            }
+        }
     }
     post {
         always {
