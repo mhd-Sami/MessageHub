@@ -12,11 +12,6 @@ pipeline {
                 git branch: 'main', credentialsId: 'GitHub-Auth', url: 'https://github.com/mhd-Sami/MessageHub.git'
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                bat 'npm install'
-            }
-        }
         stage('Prepare Environment') {
             steps {
                 withCredentials([file(credentialsId: 'ENV-Secrets', variable: 'ENV_FILE')]) {
@@ -24,17 +19,10 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
+        stage('Run Docker Compose') {
             steps {
                 script {
-                    dockerImage = docker.build("messagehub-backend:${env.BUILD_ID}")
-                }
-            }
-        }
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    dockerImage.run('-d -p 5000:5000 --env-file .env')
+                    bat 'docker-compose -f docker-compose.yml up --build -d'
                 }
             }
         }
