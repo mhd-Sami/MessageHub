@@ -43,7 +43,7 @@ import axios from "axios";
 import ChatLoading from "../ChatLoading";
 // import { accessChat } from "../../../../backend/controllers/chatControllers";
 import UserListItem from "../UserAvatar/UserListItem";
-import { set } from "mongoose";
+
 import UpdateProfile from "../Authentication/UpdateProfile";
 import UpdatePassword from "../Authentication/UpdatePassword";
 const SideDrawer = () => {

@@ -13,7 +13,7 @@ import ProfileModal from "./miscellaneous/ProfileModal";
 import { Image } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { set } from "mongoose";
+
 import { CalendarIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import chatBG from "../animation/chatBG.webp";
 import { CopyToClipboard } from "react-copy-to-clipboard";
