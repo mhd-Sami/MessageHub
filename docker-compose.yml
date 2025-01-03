@@ -33,7 +33,7 @@ services:
       - backend
 
 networks:
-  mern-network:
+  messagehub-network:
     driver: bridge
 
 volumes:
