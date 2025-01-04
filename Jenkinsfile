@@ -27,8 +27,8 @@ pipeline {
                 echo 'Building Docker images for frontend and backend...'
                 script {
                     // Build backend and frontend Docker images
-                   bat "docker build -t %DOCKER_REPO%/frontend-v1.0 ./frontend"
-                   bat "docker build -t %DOCKER_REPO%/backend-v1.0 ."
+                   bat "docker build -t frontend-v1.0 ./frontend"
+                   bat "docker build -t backend-v1.0 ."
 
                 }
             }
@@ -42,8 +42,8 @@ pipeline {
                         bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
 
                         // Push the images to Docker Hub
-                        bat "docker push %DOCKER_REPO%/frontend-v1.0"
-                        bat "docker push %DOCKER_REPO%/backend-v1.0"
+                        bat "docker push %DOCKER_REPO% frontend-v1.0"
+                        bat "docker push %DOCKER_REPO% backend-v1.0"
 
                     }
                 }
