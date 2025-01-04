@@ -35,10 +35,10 @@ pipeline {
         stage('Push Docker Images to Docker Hub') {
             steps {
                 echo 'Pushing Docker images to Docker Hub...'
-                withCredentials([usernamePassword(credentialsId: 'DockerHub-Auth', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: 'DockerHub-Auth', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
                         // Log into Docker Hub
-                        bat "echo %DOCKER_TOKEN% | docker login -u %DOCKER_USERNAME% --password-stdin"
+                        bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
 
                         // Push the images to Docker Hub
                         bat "docker push %DOCKER_REPO%/frontend:latest"
