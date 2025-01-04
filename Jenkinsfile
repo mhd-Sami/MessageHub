@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         NODE_ENV = 'production'
-        DOCKER_REPO = 'messagehub' // Docker Hub repository
+        DOCKER_REPO = 'messagehub'
     }
     stages {
         stage('Checkout') {
@@ -27,8 +27,8 @@ pipeline {
                 echo 'Building Docker images for frontend and backend...'
                 script {
                     // Build backend and frontend Docker images
-                    bat "docker build -t %env.DOCKER_REPO%/frontend:latest ./frontend" // Tag the frontend image with 'frontend'
-                    bat "docker build -t %env.DOCKER_REPO%/backend:latest ." // Tag the backend image with 'backend'
+                    bat "docker build -t %DOCKER_FRONTEND%/frontend:latest ./frontend" // Tag the frontend image with 'frontend'
+                    bat "docker build -t %DOCKER_BACKEND%/backend:latest ." // Tag the backend image with 'backend'
 
                 }
             }
@@ -43,10 +43,10 @@ pipeline {
 
                         // Push the images to Docker Hub
                          // Push the frontend image to Docker Hub
-                        bat "docker push %env.DOCKER_REPO%/frontend:latest"
+                        bat "docker push %DOCKER_REPO%/frontend:latest"
 
                         // Push the backend image to Docker Hub
-                        bat "docker push %env.DOCKER_REPO%/backend:latest"
+                        bat "docker push %DOCKER_REPO%/backend:latest"
 
                     }
                 }
