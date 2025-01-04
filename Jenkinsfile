@@ -27,8 +27,8 @@ pipeline {
                 echo 'Building Docker images for frontend and backend...'
                 script {
                     // Build backend and frontend Docker images
-                    bat 'docker build -t ${DOCKER_REPO}/frontend:latest ./frontend'
-                    bat 'docker build -t ${DOCKER_REPO}/backend:latest .'
+                    bat 'docker build -t %DOCKER_REPO%/frontend:latest ./frontend'
+                    bat 'docker build -t %DOCKER_REPO%/backend:latest .'
                 }
             }
         }
@@ -38,11 +38,11 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub-Auth', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
                         // Log into Docker Hub
-                        bat "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                        bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
 
                         // Push the images to Docker Hub
-                        bat "docker push ${DOCKER_REPO}/frontend:latest"
-                        bat "docker push ${DOCKER_REPO}/backend:latest"
+                        bat "docker push %DOCKER_REPO%/frontend:latest"
+                        bat "docker push %DOCKER_REPO%/backend:latest"
                     }
                 }
             }
@@ -75,10 +75,10 @@ pipeline {
             cleanWs()
         }
         success {
-            echo 'Build Completed Successfully!'
+            echo 'Build and Deployment Completed Successfully!'
         }
         failure {
-            echo 'Build Failed. Check logs for details.'
+            echo 'Build and Deployment Failed. Check logs for details.'
         }
     }
 }
