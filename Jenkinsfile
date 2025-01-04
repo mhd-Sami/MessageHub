@@ -1,11 +1,11 @@
 pipeline {
     agent any
     tools {
-        nodejs 'NodeJS' // Ensure this matches the name configured in Global Tool Configuration
+        nodejs 'NodeJS' 
     }
     environment {
         NODE_ENV = 'production'
-        DOCKER_REPO = 'messagehub'
+        DOCKER_REPO = 'thedevsami/messagehub' // Docker Hub repository
     }
     stages {
         stage('Checkout') {
@@ -27,9 +27,8 @@ pipeline {
                 echo 'Building Docker images for frontend and backend...'
                 script {
                     // Build backend and frontend Docker images
-                    bat "docker build -t %DOCKER_FRONTEND%/frontend:latest ./frontend" // Tag the frontend image with 'frontend'
-                    bat "docker build -t %DOCKER_BACKEND%/backend:latest ." // Tag the backend image with 'backend'
-
+                    bat 'docker build -t %DOCKER_REPO%/frontend:latest ./frontend'
+                    bat 'docker build -t %DOCKER_REPO%/backend:latest .'
                 }
             }
         }
@@ -42,12 +41,8 @@ pipeline {
                         bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
 
                         // Push the images to Docker Hub
-                         // Push the frontend image to Docker Hub
                         bat "docker push %DOCKER_REPO%/frontend:latest"
-
-                        // Push the backend image to Docker Hub
                         bat "docker push %DOCKER_REPO%/backend:latest"
-
                     }
                 }
             }
@@ -80,10 +75,10 @@ pipeline {
             cleanWs()
         }
         success {
-            echo 'Build and Deployment Completed Successfully!'
+            echo 'Build Completed Successfully!'
         }
         failure {
-            echo 'Build and Deployment Failed. Check logs for details.'
+            echo 'Build Failed. Check logs for details.'
         }
     }
 }
