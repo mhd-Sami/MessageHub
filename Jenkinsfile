@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         NODE_ENV = 'production'
-        DOCKER_REPO = 'thedevsami/messagehub' // Docker Hub repository
+        DOCKER_REPO = 'thedevsami/backend' // Docker Hub repository
     }
     stages {
         stage('Checkout') {
@@ -27,8 +27,8 @@ pipeline {
                 echo 'Building Docker images for frontend and backend...'
                 script {
                     // Build backend and frontend Docker images
-                   bat "docker build -t frontend-v1.0 ./frontend"
-                   bat "docker build -t backend-v1.0 ."
+                    bat "docker build -t %DOCKER_REPO%/frontend:latest ./frontend" // Tag the frontend image with 'frontend'
+                    bat "docker build -t %DOCKER_REPO%/backend:latest ." // Tag the backend image with 'backend'
 
                 }
             }
@@ -42,8 +42,11 @@ pipeline {
                         bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
 
                         // Push the images to Docker Hub
-                        bat "docker push %DOCKER_REPO% frontend-v1.0"
-                        bat "docker push %DOCKER_REPO% backend-v1.0"
+                         // Push the frontend image to Docker Hub
+                        bat "docker push %DOCKER_REPO%/frontend:latest"
+
+                        // Push the backend image to Docker Hub
+                        bat "docker push %DOCKER_REPO%/backend:latest"
 
                     }
                 }
