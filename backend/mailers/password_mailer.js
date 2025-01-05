@@ -6,7 +6,7 @@ exports.forgotPasswordLink = async (senderMail, link) => {
 
   nodemailer.transporter.sendMail(
     {
-      from: "'Let's Talk' <foo@example.com>",
+      from: "'MessageHub' <foo@example.com>",
       to: senderMail,
       subject: "Forgot Password - reset link",
       html: `

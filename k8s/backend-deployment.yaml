@@ -22,6 +22,9 @@ spec:
               value: "mongodb://mongo-service:27017/chatdb"
             - name: CORS_ORIGIN
               value: "http://localhost:30080"
+            # Add this new environment variable for verification links
+            - name: FRONTEND_URL
+              value: "http://localhost:30080"
             - name: PORT
               value: "5000"
 ---

@@ -65,10 +65,7 @@ const Login = () => {
       setLoading(false);
     }
   };
-  const getUserCredentialsHandler = () => {
-    setEmail("guest@example.com");
-    setPassword("123456");
-  };
+
   return (
     <VStack spacing="5px">
       <FormControl style={{ marginBottom: "5px" }} id="email" isRequired>
