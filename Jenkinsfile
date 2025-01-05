@@ -71,17 +71,27 @@ pipeline {
         success {
             echo 'Build Completed Successfully!'
             emailext(
-                subject: 'Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
-                body: 'The build was successful.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\n\nCheck the build details at: ${env.BUILD_URL}',
-                to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com',
+                subject: "Jenkins Build Success: ${currentBuild.fullDisplayName}",
+                body: """The build was successful.
+
+Job: ${currentBuild.fullDisplayName}
+Build Number: ${currentBuild.number}
+
+Check the build details at: ${currentBuild.absoluteUrl}""",
+                to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com,zulkhasheikh986@gmail.com',
             )
         }
         failure {
             echo 'Build Failed. Check logs for details.'
             emailext(
-                subject: 'Jenkins Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
-                body: 'The build failed.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\n\nCheck the build details at: ${env.BUILD_URL}',
-                to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com',
+                subject: "Jenkins Build Failure: ${currentBuild.fullDisplayName}",
+                body: """The build failed.
+
+Job: ${currentBuild.fullDisplayName}
+Build Number: ${currentBuild.number}
+
+Check the build details at: ${currentBuild.absoluteUrl}""",
+                to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com,zulkhasheikh986@gmail.com',
             )
         }
     }
