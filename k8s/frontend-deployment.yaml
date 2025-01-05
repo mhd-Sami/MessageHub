@@ -19,7 +19,7 @@ spec:
             - containerPort: 3000
           env:
             - name: REACT_APP_API_URL
-              value: "http://localhost:30081"  # Changed to use localhost and backend NodePort
+              value: "http://localhost:30081"  # Make sure this matches exactly
 ---
 apiVersion: v1
 kind: Service

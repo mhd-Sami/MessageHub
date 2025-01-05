@@ -21,7 +21,9 @@ spec:
             - name: MONGO_URI
               value: "mongodb://mongo-service:27017/chatdb"
             - name: CORS_ORIGIN
-              value: "http://localhost:30080"  # Added to allow frontend requests
+              value: "http://localhost:30080"
+            - name: PORT
+              value: "5000"
 ---
 apiVersion: v1
 kind: Service
