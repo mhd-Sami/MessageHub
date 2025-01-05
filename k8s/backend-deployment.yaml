@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: thedevsami/messagehub/backend:latest
+          image: thedevsami/messagehub:backend-latest
           ports:
             - containerPort: 5000
           env:
