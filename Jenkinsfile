@@ -47,20 +47,6 @@ pipeline {
                 }
             }
         }
-        stage('Switch Kubernetes Context') {
-            steps {
-                script {
-                    // Switch to docker-desktop context
-                    bat 'kubectl config use-context docker-desktop'
-                    
-                    // Verify the switch
-                    bat 'kubectl config current-context'
-                    
-                    // Check connection
-                    bat 'kubectl get nodes'
-                }
-            }
-        }
         stage('Deploy to Kubernetes') {
             steps {
                 script {
