@@ -17,6 +17,9 @@ spec:
           image: thedevsami/messagehub/frontend:latest
           ports:
             - containerPort: 3000
+          env:
+            - name: REACT_APP_API_URL
+              value: "http://backend-service:5000"
 ---
 apiVersion: v1
 kind: Service

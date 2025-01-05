@@ -47,24 +47,16 @@ pipeline {
                 }
             }
         }
-        stage('Set up Minikube and kubectl') {
+        stage('Deploy to Kubernetes') {
             steps {
-                echo 'Setting up Minikube and kubectl...'
                 script {
-                    // Set up Minikube
-                    bat 'minikube start'
-
-                    // Set up kubectl to use Minikube context
-                    bat 'kubectl config use-context minikube'
-                }
-            }
-        }
-        stage('Deploy to Minikube') {
-            steps {
-                echo 'Deploying to Minikube...'
-                script {
-                    // Deploy using Kubernetes manifests
-                    bat 'kubectl apply -f k8s/'
+                    // Deploy everything
+                    bat "kubectl apply -f k8s/"
+                    
+                    // Wait for everything to be ready
+                    bat "kubectl rollout status deployment/frontend-deployment"
+                    bat "kubectl rollout status deployment/backend-deployment"
+                    bat "kubectl rollout status deployment/mongo-deployment"
                 }
             }
         }
