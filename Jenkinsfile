@@ -47,13 +47,16 @@ pipeline {
                 }
             }
         }
-        stage('Check Kubernetes Connection') {
+        stage('Switch Kubernetes Context') {
             steps {
                 script {
                     // Switch to docker-desktop context
                     bat 'kubectl config use-context docker-desktop'
                     
-                    // Check if we can connect to the cluster
+                    // Verify the switch
+                    bat 'kubectl config current-context'
+                    
+                    // Check connection
                     bat 'kubectl get nodes'
                 }
             }
@@ -61,7 +64,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Deploy with validation disabled for now
+                    // Deploy to Kubernetes
                     bat "kubectl apply -f k8s/ --validate=false"
                     
                     // Wait for deployments
