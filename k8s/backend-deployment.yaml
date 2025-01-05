@@ -19,17 +19,20 @@ spec:
             - containerPort: 5000
           env:
             - name: MONGO_URI
-              value: "mongodb://mongo-container:27017/chatdb"
+              value: "mongodb://mongo-service:27017/chatdb"
+            - name: CORS_ORIGIN
+              value: "http://localhost:30080"  # Added to allow frontend requests
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: backend-service
 spec:
+  type: NodePort
   selector:
     app: backend
   ports:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-  
+      nodePort: 30081

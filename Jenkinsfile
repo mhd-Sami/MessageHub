@@ -74,10 +74,10 @@ pipeline {
                 subject: "Jenkins Build Success: ${currentBuild.fullDisplayName}",
                 body: """The build was successful.
 
-Job: ${currentBuild.fullDisplayName}
-Build Number: ${currentBuild.number}
+                Job: ${currentBuild.fullDisplayName}
+                Build Number: ${currentBuild.number}
 
-Check the build details at: ${currentBuild.absoluteUrl}""",
+                Check the build details at: ${currentBuild.absoluteUrl}""",
                 to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com,zulkhasheikh986@gmail.com',
             )
         }
@@ -87,10 +87,10 @@ Check the build details at: ${currentBuild.absoluteUrl}""",
                 subject: "Jenkins Build Failure: ${currentBuild.fullDisplayName}",
                 body: """The build failed.
 
-Job: ${currentBuild.fullDisplayName}
-Build Number: ${currentBuild.number}
+                Job: ${currentBuild.fullDisplayName}
+                Build Number: ${currentBuild.number}
 
-Check the build details at: ${currentBuild.absoluteUrl}""",
+                Check the build details at: ${currentBuild.absoluteUrl}""",
                 to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com,zulkhasheikh986@gmail.com',
             )
         }
