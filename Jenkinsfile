@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'NodeJS' 
+        nodejs 'NodeJS'
     }
     environment {
         NODE_ENV = 'production'
@@ -27,8 +27,8 @@ pipeline {
                 echo 'Building Docker images for frontend and backend...'
                 script {
                     // Build backend and frontend Docker images
-                    bat 'docker build -t %DOCKER_REPO%/frontend:latest ./frontend'
-                    bat 'docker build -t %DOCKER_REPO%/backend:latest .'
+                    bat 'docker build -t %DOCKER_REPO%:frontend-latest ./frontend'
+                    bat 'docker build -t %DOCKER_REPO%:backend-latest .'
                 }
             }
         }
@@ -37,12 +37,12 @@ pipeline {
                 echo 'Pushing Docker images to Docker Hub...'
                 withCredentials([usernamePassword(credentialsId: 'DockerHub-Auth', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
-                        // Log into Docker Hub
-                        bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
+                        // Log into Docker Hub securely
+                        bat "echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin"
 
                         // Push the images to Docker Hub
-                        bat "docker push %DOCKER_REPO%/frontend:latest"
-                        bat "docker push %DOCKER_REPO%/backend:latest"
+                        bat "docker push %DOCKER_REPO%:frontend-latest"
+                        bat "docker push %DOCKER_REPO%:backend-latest"
                     }
                 }
             }
