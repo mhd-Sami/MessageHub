@@ -14,6 +14,12 @@ pipeline {
                 git branch: 'main', credentialsId: 'GitHub-Auth', url: 'https://github.com/mhd-Sami/MessageHub.git'
             }
         }
+        stage('Verify Kubernetes Access') {
+            steps {
+                echo 'Verifying Kubernetes access...'
+                sh 'kubectl get nodes'
+            }
+        }
         stage('Prepare Environment') {
             steps {
                 echo 'Preparing the environment...'
