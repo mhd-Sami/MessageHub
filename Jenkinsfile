@@ -47,21 +47,21 @@ pipeline {
                 }
             }
         }
-        
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Deploy to Kubernetes
-                    bat "kubectl apply -f k8s/ --validate=false"
-                    
-                    // Wait for deployments
-                    bat "kubectl rollout status deployment/frontend-deployment"
-                    bat "kubectl rollout status deployment/backend-deployment"
-                    bat "kubectl rollout status deployment/mongo-deployment"
+                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        // Deploy to Kubernetes
+                        bat "kubectl apply -f k8s/ --validate=false"
+                        
+                        // Wait for deployments
+                        bat "kubectl rollout status deployment/frontend-deployment"
+                        bat "kubectl rollout status deployment/backend-deployment"
+                        bat "kubectl rollout status deployment/mongo-deployment"
+                    }
                 }
             }
         }
-
     }
     post {
         always {
@@ -70,9 +70,19 @@ pipeline {
         }
         success {
             echo 'Build Completed Successfully!'
+            emailext(
+                subject: 'Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
+                body: 'The build was successful.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\n\nCheck the build details at: ${env.BUILD_URL}',
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
         }
         failure {
             echo 'Build Failed. Check logs for details.'
+            emailext(
+                subject: 'Jenkins Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
+                body: 'The build failed.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\n\nCheck the build details at: ${env.BUILD_URL}',
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
         }
     }
 }
