@@ -54,10 +54,10 @@ pipeline {
                         // Deploy to Kubernetes
                         bat "kubectl apply -f k8s/ --validate=false"
                         
-                        // // Wait for deployments
-                        // bat "kubectl rollout status deployment/frontend-deployment"
-                        // bat "kubectl rollout status deployment/backend-deployment"
-                        // bat "kubectl rollout status deployment/mongo-deployment"
+                        // Wait for deployments
+                        bat "kubectl rollout status deployment/frontend-deployment"
+                        bat "kubectl rollout status deployment/backend-deployment"
+                        bat "kubectl rollout status deployment/mongo-deployment"
                     }
                 }
             }
@@ -71,19 +71,17 @@ pipeline {
         success {
             echo 'Build Completed Successfully!'
             emailext(
-                subject: 'Jenkins Build Success: %env.JOB_NAME% #%env.BUILD_NUMBER%',
-                body: 'The build was successful.\n\nJob: %env.JOB_NAME%\nBuild Number: %env.BUILD_NUMBER%\n\nCheck the build details at: %env.BUILD_URL%',
+                subject: 'Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
+                body: 'The build was successful.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\n\nCheck the build details at: ${env.BUILD_URL}',
                 to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com',
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
         failure {
             echo 'Build Failed. Check logs for details.'
             emailext(
-                subject: 'Jenkins Build Failure: %env.JOB_NAME% #%env.BUILD_NUMBER%',
-                body: 'The build failed.\n\nJob: %env.JOB_NAME%\nBuild Number: %env.BUILD_NUMBER%\n\nCheck the build details at: %env.BUILD_URL%',
+                subject: 'Jenkins Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}',
+                body: 'The build failed.\n\nJob: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\n\nCheck the build details at: ${env.BUILD_URL}',
                 to: 'dev.thesami@gmail.com,zulkha.dev@gmail.com,muhammadsami2502@gmail.com',
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
         }
     }
