@@ -54,10 +54,10 @@ pipeline {
                         // Deploy to Kubernetes
                         bat "kubectl apply -f k8s/ --validate=false"
                         
-                        // Wait for deployments
-                        bat "kubectl rollout status deployment/frontend-deployment"
-                        bat "kubectl rollout status deployment/backend-deployment"
-                        bat "kubectl rollout status deployment/mongo-deployment"
+                        // // Wait for deployments
+                        // bat "kubectl rollout status deployment/frontend-deployment"
+                        // bat "kubectl rollout status deployment/backend-deployment"
+                        // bat "kubectl rollout status deployment/mongo-deployment"
                     }
                 }
             }
