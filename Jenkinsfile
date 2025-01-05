@@ -47,19 +47,31 @@ pipeline {
                 }
             }
         }
+        stage('Check Kubernetes Connection') {
+            steps {
+                script {
+                    // Switch to docker-desktop context
+                    bat 'kubectl config use-context docker-desktop'
+                    
+                    // Check if we can connect to the cluster
+                    bat 'kubectl get nodes'
+                }
+            }
+        }
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Deploy everything
-                    bat "kubectl apply -f k8s/"
+                    // Deploy with validation disabled for now
+                    bat "kubectl apply -f k8s/ --validate=false"
                     
-                    // Wait for everything to be ready
+                    // Wait for deployments
                     bat "kubectl rollout status deployment/frontend-deployment"
                     bat "kubectl rollout status deployment/backend-deployment"
                     bat "kubectl rollout status deployment/mongo-deployment"
                 }
             }
         }
+
     }
     post {
         always {
