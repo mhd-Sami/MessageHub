@@ -62,9 +62,9 @@ pipeline {
                         bat "kubectl apply -f k8s/"
                         
                         // Wait for deployments
-                        bat "kubectl rollout status deployment/frontend-deployment"
-                        bat "kubectl rollout status deployment/backend-deployment"
-                        bat "kubectl rollout status deployment/mongodb-deployment"
+                        bat "kubectl rollout status deployment/frontend"
+                        bat "kubectl rollout status deployment/backend"
+                        bat "kubectl rollout status deployment/mongodb"
                     }
                 }
             }
