@@ -22,46 +22,57 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Images') {
-            steps {
-                echo 'Building Docker images for frontend and backend...'
-                script {
-                    // Build backend and frontend Docker images
-                    bat 'docker build -t %DOCKER_REPO%:frontend-latest ./frontend'
-                    bat 'docker build -t %DOCKER_REPO%:backend-latest .'
-                }
-            }
-        }
-        stage('Push Docker Images to Docker Hub') {
-            steps {
-                echo 'Pushing Docker images to Docker Hub...'
-                withCredentials([usernamePassword(credentialsId: 'DockerHub-Auth', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    script {
-                        // Log into Docker Hub securely
-                        bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
+        // stage('Build Docker Images') {
+        //     steps {
+        //         echo 'Building Docker images for frontend and backend...'
+        //         script {
+        //             // Build backend and frontend Docker images
+        //             bat 'docker build -t %DOCKER_REPO%:frontend-latest ./frontend'
+        //             bat 'docker build -t %DOCKER_REPO%:backend-latest .'
+        //         }
+        //     }
+        // }
+        // stage('Push Docker Images to Docker Hub') {
+        //     steps {
+        //         echo 'Pushing Docker images to Docker Hub...'
+        //         withCredentials([usernamePassword(credentialsId: 'DockerHub-Auth', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+        //             script {
+        //                 // Log into Docker Hub securely
+        //                 bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
 
-                        // Push the images to Docker Hub
-                        bat "docker push %DOCKER_REPO%:frontend-latest"
-                        bat "docker push %DOCKER_REPO%:backend-latest"
-                    }
-                }
-            }
-        }
-        stage('Deploy to Kubernetes') {
+        //                 // Push the images to Docker Hub
+        //                 bat "docker push %DOCKER_REPO%:frontend-latest"
+        //                 bat "docker push %DOCKER_REPO%:backend-latest"
+        //             }
+        //         }
+        //     }
+        // }
+
+        stage('Run Docker Compose') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                        // Deploy to Kubernetes
-                        bat "kubectl apply -f k8s/"
-                        
-                        // Wait for deployments
-                        bat "kubectl rollout status deployment/frontend-deployment"
-                        bat "kubectl rollout status deployment/backend-deployment"
-                        bat "kubectl rollout status deployment/mongo-deployment"
-                    }
+                    bat 'docker-compose -f docker-compose.yml up --build -d'
                 }
             }
         }
+
+
+
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         script {
+        //             withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+        //                 // Deploy to Kubernetes
+        //                 bat "kubectl apply -f k8s/"
+                        
+        //                 // Wait for deployments
+        //                 bat "kubectl rollout status deployment/frontend-deployment"
+        //                 bat "kubectl rollout status deployment/backend-deployment"
+        //                 bat "kubectl rollout status deployment/mongo-deployment"
+        //             }
+        //         }
+        //     }
+        // }
     }
     post {
         always {
