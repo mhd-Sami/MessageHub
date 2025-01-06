@@ -1,9 +1,9 @@
+# frontend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment
+  name: frontend
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -14,22 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
+        # Using your Docker Hub image
         image: thedevsami/messagehub:frontend-latest
         ports:
         - containerPort: 3000
-        env:
-        - name: REACT_APP_API_URL
-          value: "http://localhost:30081"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-service
-spec:
-  selector:
-    app: frontend
-  ports:
-  - port: 3000
-    targetPort: 3000
-    nodePort: 30080
-  type: NodePort

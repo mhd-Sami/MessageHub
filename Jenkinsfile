@@ -64,7 +64,7 @@ pipeline {
                         // Wait for deployments
                         bat "kubectl rollout status deployment/frontend-deployment"
                         bat "kubectl rollout status deployment/backend-deployment"
-                        bat "kubectl rollout status deployment/mongo-deployment"
+                        bat "kubectl rollout status deployment/mongodb-deployment"
                     }
                 }
             }
