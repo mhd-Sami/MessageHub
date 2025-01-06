@@ -27,7 +27,7 @@ spec:
                   key: MONGODB_URL
             # Allow CORS from both internal and external frontend URLs
             - name: CORS_ORIGIN
-              value: "http://frontend-service:3000,http://localhost:30080"
+              value: "http://frontend-service:3000"
             # Port configuration
             - name: PORT
               value: "5000"

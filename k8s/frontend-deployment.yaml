@@ -21,13 +21,11 @@ spec:
           env:
             # URL for making API calls to backend
             - name: REACT_APP_API_URL
-            - name: REACT_APP_API_URL
-              value: "http://localhost:30081"
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-urls
-            #       key: BACKEND_EXTERNAL_URL
-            # # URL for email verification links
+              valueFrom:
+                configMapKeyRef:
+                  name: app-urls
+                  key: BACKEND_INTERNAL_URL
+            # URL for email verification links
             - name: LOCALHOST
               valueFrom:
                 configMapKeyRef:
