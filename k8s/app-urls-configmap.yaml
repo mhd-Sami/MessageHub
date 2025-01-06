@@ -1,16 +1,10 @@
-# 1. app-urls-configmap.yaml
+# Additional ConfigMap for URLs
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-urls
 data:
-  # External URLs (accessible by users)
-  FRONTEND_EXTERNAL_URL: "http://localhost:30080"
-  BACKEND_EXTERNAL_URL: "http://localhost:30081"
-  
-  # Internal URLs (for pod-to-pod communication)
   FRONTEND_INTERNAL_URL: "http://frontend-service:3000"
+  FRONTEND_EXTERNAL_URL: "http://localhost:30080"
   BACKEND_INTERNAL_URL: "http://backend-service:5000"
-  
-  # Database connection
-  MONGODB_URL: "mongodb://mongo-service:27017/chatdb"
+  BACKEND_EXTERNAL_URL: "http://localhost:30081"

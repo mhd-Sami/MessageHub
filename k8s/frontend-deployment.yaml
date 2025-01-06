@@ -1,4 +1,4 @@
-# 2. frontend-deployment.yaml
+# frontend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,18 +19,12 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            # URL for making API calls to backend
             - name: REACT_APP_API_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-urls
-                  key: BACKEND_INTERNAL_URL
-            # URL for email verification links
+              value: "http://localhost:30081"  # External backend URL
+            - name: REACT_APP_SOCKET_URL
+              value: "http://localhost:30081"  # For socket.io
             - name: LOCALHOST
-              valueFrom:
-                configMapKeyRef:
-                  name: app-urls
-                  key: FRONTEND_EXTERNAL_URL
+              value: "http://localhost:30080"  # For email verification
 ---
 # Frontend Service for exposing the React app
 apiVersion: v1

@@ -1,4 +1,4 @@
-# 3. backend-deployment.yaml
+# backend-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,24 +19,14 @@ spec:
           ports:
             - containerPort: 5000
           env:
-            # MongoDB connection
             - name: MONGO_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: app-urls
-                  key: MONGODB_URL
-            # Allow CORS from both internal and external frontend URLs
+              value: "mongodb://mongo-service:27017/chatdb"
             - name: CORS_ORIGIN
-              value: "http://frontend-service:3000"
-            # Port configuration
+              value: "http://frontend-service:3000,http://localhost:30080"
             - name: PORT
               value: "5000"
-            # Public URL for email verification links
             - name: PUBLIC_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-urls
-                  key: BACKEND_EXTERNAL_URL
+              value: "http://localhost:30081"  # External access URL
 ---
 # Backend Service for API access
 apiVersion: v1
