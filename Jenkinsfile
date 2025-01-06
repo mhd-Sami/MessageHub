@@ -52,7 +52,7 @@ pipeline {
                 script {
                     withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                         // Deploy to Kubernetes
-                        bat "kubectl apply -f k8s/ --validate=false"
+                        bat "kubectl apply -f k8s/"
                         
                         // Wait for deployments
                         bat "kubectl rollout status deployment/frontend-deployment"

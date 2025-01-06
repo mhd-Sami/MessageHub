@@ -1,3 +1,4 @@
+# 5. mongo-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -8,4 +9,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: hostpath  # Added for Docker Desktop
+  storageClassName: hostpath  # For Docker Desktop
