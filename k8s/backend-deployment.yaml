@@ -14,10 +14,21 @@ spec:
     spec:
       containers:
       - name: backend
-        # Using your Docker Hub image
         image: thedevsami/messagehub:backend-latest
         ports:
         - containerPort: 5000
         env:
         - name: MONGO_URI
           value: mongodb://mongo:27017/chatdb
+---
+# backend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 5000
+    targetPort: 5000

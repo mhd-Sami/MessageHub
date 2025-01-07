@@ -17,7 +17,7 @@ module.exports = async function sendEmail(email, subject, link) {
       from: process.env.EMAIL,
       to: email,
       subject: subject,
-      html: `<h1>Click on the link to verify email</h1>
+      html: `<h3>Click on the link to verify email</h3>
       <a href="${link}">Click here</a>`,
     });
     console.log("Email sent");
